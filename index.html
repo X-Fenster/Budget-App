@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2c3e50" />
+    <title>Budget App</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="icons/apple-touch-icon.png"
+    />
+    <link rel="icon" type="image/png" sizes="48x48" href="icons/favicon.ico" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="icons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="icons/favicon-16x16.png"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Budget App</h1>
+        <button
+          id="themeToggle"
+          class="btn"
+          style="width: 200px; margin-bottom: 5px"
+        >
+          Theme wechseln
+        </button>
+        <div class="balance-container">
+          <h2>Aktueller Kontostand</h2>
+          <div id="balance" class="balance">0,00 €</div>
+        </div>
+      </header>
+
+      <div class="summary">
+        <div class="income-container">
+          <h3>Einnahmen</h3>
+          <div id="income" class="income">0,00 €</div>
+        </div>
+        <div class="expense-container">
+          <h3>Ausgaben</h3>
+          <div id="expense" class="expense">0,00 €</div>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <h2>Neue Transaktion</h2>
+        <form id="budgetForm">
+          <div class="form-group">
+            <label for="description">Beschreibung:</label>
+            <input type="text" id="description" name="description" required />
+          </div>
+
+          <div class="form-group">
+            <label for="category">Kategorie:</label>
+            <input type="text" id="category" name="category" required />
+          </div>
+
+          <div class="form-group">
+            <label for="amount">Betrag (€):</label>
+            <input
+              type="number"
+              id="amount"
+              name="amount"
+              min="0.01"
+              step="0.01"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="type">Typ:</label>
+            <select id="type" name="type" required>
+              <option value="income">Einnahme</option>
+              <option value="expense">Ausgabe</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Speichern</button>
+        </form>
+      </div>
+
+      <div class="transactions-container">
+        <h2>Transaktionen</h2>
+        <div class="filter">
+          <label for="filter">Filter:</label>
+          <select id="filter">
+            <option value="all">Alle</option>
+            <option value="income">Nur Einnahmen</option>
+            <option value="expense">Nur Ausgaben</option>
+          </select>
+        </div>
+        <ul id="transactionList" class="transactions-list">
+          <!-- Transaktionen werden hier dynamisch eingefügt -->
+        </ul>
+      </div>
+
+      <div
+        id="offline-status"
+        style="
+          display: none;
+          text-align: center;
+          padding: 10px;
+          background-color: #f8d7da;
+          color: #721c24;
+          margin-top: 20px;
+          border-radius: 4px;
+        "
+      >
+        Du bist offline. Die App funktioniert weiterhin, aber Änderungen werden
+        erst synchronisiert, wenn du wieder online bist.
+      </div>
+    </div>
+
+    <script src="dist/app.js"></script>
+    <script>
+      // Theme-Toggle-Button
+      const themeToggle = document.getElementById("themeToggle");
+      themeToggle.addEventListener("click", switchTheme);
+
+      function switchTheme() {
+        const root = document.documentElement;
+        const currentTheme = root.getAttribute("data-theme");
+
+        if (currentTheme === "dark") {
+          root.setAttribute("data-theme", "light");
+          localStorage.setItem("theme", "light");
+        } else {
+          root.setAttribute("data-theme", "dark");
+          localStorage.setItem("theme", "dark");
+        }
+      }
+
+      // Service Worker registrieren
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then((registration) => {
+              console.log("Service Worker registriert:", registration);
+            })
+            .catch((error) => {
+              console.log(
+                "Service Worker Registrierung fehlgeschlagen:",
+                error
+              );
+            });
+        });
+      }
+
+      // Offline-Status überwachen
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+
+      function updateOnlineStatus() {
+        const offlineStatus = document.getElementById("offline-status");
+        if (navigator.onLine) {
+          offlineStatus.style.display = "none";
+        } else {
+          offlineStatus.style.display = "block";
+        }
+      }
+
+      // Initial prüfen
+      updateOnlineStatus();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,403 @@
+:root {
+  --primary-color: #2c3e50;
+  --secondary-color: #3498db;
+  --income-color: #27ae60;
+  --expense-color: #e74c3c;
+  --light-bg: #f9f9f9;
+  --container-bg: #ffffff;
+  --text-color: #333333;
+  --border-color: #ddd;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --input-bg: #ffffff;
+  --filter-bg: #f0f0f0;
+}
+
+[data-theme="dark"] {
+  --primary-color: #ecf0f1;
+  --secondary-color: #3498db;
+  --income-color: #2ecc71;
+  --expense-color: #e74c3c;
+  --light-bg: #2c3e50;
+  --container-bg: #34495e;
+  --text-color: #ecf0f1;
+  --border-color: #4a6278;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  --input-bg: #2c3e50;
+  --filter-bg: #2c3e50;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+.theme-switch-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+}
+
+.theme-switch {
+  display: inline-block;
+  height: 24px;
+  position: relative;
+  width: 48px;
+}
+
+.theme-switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  background-color: white;
+  bottom: 4px;
+  content: "";
+  height: 16px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 16px;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #3498db;
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+.theme-icon {
+  margin-left: 8px;
+  font-size: 1.2rem;
+}
+
+h1 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+h3 {
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.balance-container {
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.balance {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.income-container,
+.expense-container {
+  flex: 1;
+  padding: 20px;
+  background-color: var(--container-bg);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.income-container {
+  margin-right: 10px;
+}
+
+.expense-container {
+  margin-left: 10px;
+}
+
+.income {
+  color: var(--income-color);
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.expense {
+  color: var(--expense-color);
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.positive {
+  color: var(--income-color);
+}
+
+.negative {
+  color: var(--expense-color);
+}
+
+.form-container {
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin-bottom: 30px;
+  transition: background-color 0.3s;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.header-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.transactions-container {
+  background-color: var(--container-bg);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  transition: background-color 0.3s;
+}
+
+.filter {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.filter label {
+  margin-right: 10px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+.filter label {
+  margin-right: 10px;
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.filter select {
+  width: auto;
+}
+
+.transactions-list {
+  list-style: none;
+}
+
+.transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  position: relative;
+  transition: background-color 0.2s;
+}
+
+.transaction-item:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-info {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.transaction-description {
+  flex: 2;
+  font-weight: 500;
+  min-width: 150px;
+}
+
+.transaction-category {
+  flex: 1;
+  color: #666;
+  min-width: 100px;
+  padding: 2px 8px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.transaction-date {
+  flex: 1;
+  color: #888;
+  font-size: 0.9rem;
+  min-width: 80px;
+}
+
+.transaction-amount {
+  flex: 1;
+  text-align: right;
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: color 0.3s;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.delete-btn:hover {
+  color: var(--expense-color);
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Responsive Anpassungen für mobile Geräte */
+@media (max-width: 768px) {
+  .summary {
+    flex-direction: column;
+  }
+
+  .income-container {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .expense-container {
+    margin-left: 0;
+  }
+
+  .transaction-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .transaction-description {
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  .transaction-category {
+    margin-bottom: 5px;
+    align-self: flex-start;
+  }
+
+  .transaction-date {
+    margin-bottom: 5px;
+  }
+
+  .transaction-amount {
+    align-self: flex-start;
+  }
+
+  .transaction-item {
+    padding: 15px 10px;
+  }
+
+  .filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter label {
+    margin-bottom: 5px;
+  }
+
+  .filter select {
+    width: 100%;
+  }
+}
